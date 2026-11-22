@@ -1,0 +1,10 @@
+{"rate": 1.0, "n": 40, "duration_s": 196.8, "output_tok_per_s": 27.4, "ttft_p50_ms": 71405.9, "ttft_p99_ms": 139590.2, "tpot_p50_ms": 31.6, "tpot_p99_ms": 36.5, "e2e_p50_ms": 77555.5, "e2e_p99_ms": 145546.3, "arm": "hf-server"}
+{"rate": 2.0, "n": 40, "duration_s": 193.1, "output_tok_per_s": 27.9, "ttft_p50_ms": 80207.1, "ttft_p99_ms": 159913.4, "tpot_p50_ms": 31.1, "tpot_p99_ms": 34.2, "e2e_p50_ms": 86722.5, "e2e_p99_ms": 165980.6, "arm": "hf-server"}
+{"rate": 4.0, "n": 40, "duration_s": 192.1, "output_tok_per_s": 28.1, "ttft_p50_ms": 86145.4, "ttft_p99_ms": 171196.5, "tpot_p50_ms": 31.1, "tpot_p99_ms": 34.7, "e2e_p50_ms": 92743.5, "e2e_p99_ms": 177036.7, "arm": "hf-server"}
+{'shape': '8 seqs x 1 query x 512 context', 'sdpa_ms': 1.927, 'grouped_ms': 0.499, 'max_abs_diff': 0.00030517578125}
+{'shape': '32 seqs x 1 query x 512 context', 'sdpa_ms': 5.561, 'grouped_ms': 0.745, 'max_abs_diff': 0.000244140625}
+{'shape': '16 seqs x 1 query x 1024 context', 'sdpa_ms': 5.624, 'grouped_ms': 0.784, 'max_abs_diff': 0.00018310546875}
+{'shape': '8 seqs x 5 query x 512 context', 'sdpa_ms': 1.452, 'grouped_ms': 0.523, 'max_abs_diff': 0.00048828125}
+{'shape': '1 seqs x 256 query x 256 context', 'sdpa_ms': 0.466, 'grouped_ms': 1.094, 'max_abs_diff': 0.001953125}
+{'shape': '4 seqs x 512 query x 512 context', 'sdpa_ms': 5.759, 'grouped_ms': 15.362, 'max_abs_diff': 0.001953125}
+done

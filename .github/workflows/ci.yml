@@ -1,0 +1,17 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  cpu-tests:
+    # The GPU suite (token-identity vs HF, spec decoding, preemption) needs CUDA and runs
+    # locally; it is skipped here. CI covers allocator, scheduler policy, drafter,
+    # sampling, speculative-sampling distribution and the HTTP/detokenizer layer.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[dev]"
+      - run: pytest -q -rs

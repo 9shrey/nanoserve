@@ -1,0 +1,114 @@
+{
+ "dispatch": {
+  "prefill": [
+   {
+    "seqs": 1,
+    "len": 1024,
+    "ms": 817.6,
+    "tok_per_s": 1252,
+    "tflops": 0.952,
+    "sm_clock_mhz": 1860,
+    "fp32_peak_tflops": 3.81,
+    "mfu_vs_fp32_peak": 0.25
+   },
+   {
+    "seqs": 4,
+    "len": 256,
+    "ms": 713.7,
+    "tok_per_s": 1435,
+    "tflops": 1.043,
+    "sm_clock_mhz": 1815,
+    "fp32_peak_tflops": 3.72,
+    "mfu_vs_fp32_peak": 0.281
+   }
+  ],
+  "decode": [
+   {
+    "batch": 1,
+    "context": 300,
+    "ms_per_step": 33.43,
+    "tok_per_s": 29.9
+   },
+   {
+    "batch": 2,
+    "context": 300,
+    "ms_per_step": 46.27,
+    "tok_per_s": 43.2
+   },
+   {
+    "batch": 8,
+    "context": 300,
+    "ms_per_step": 46.89,
+    "tok_per_s": 170.6
+   },
+   {
+    "batch": 16,
+    "context": 300,
+    "ms_per_step": 46.54,
+    "tok_per_s": 343.8
+   },
+   {
+    "batch": 32,
+    "context": 300,
+    "ms_per_step": 62.2,
+    "tok_per_s": 514.5
+   }
+  ]
+ },
+ "stock_cublas": {
+  "prefill": [
+   {
+    "seqs": 1,
+    "len": 1024,
+    "ms": 2061.4,
+    "tok_per_s": 497,
+    "tflops": 0.377,
+    "sm_clock_mhz": 1905,
+    "fp32_peak_tflops": 3.9,
+    "mfu_vs_fp32_peak": 0.097
+   },
+   {
+    "seqs": 4,
+    "len": 256,
+    "ms": 2002.4,
+    "tok_per_s": 511,
+    "tflops": 0.372,
+    "sm_clock_mhz": 1905,
+    "fp32_peak_tflops": 3.9,
+    "mfu_vs_fp32_peak": 0.095
+   }
+  ],
+  "decode": [
+   {
+    "batch": 1,
+    "context": 300,
+    "ms_per_step": 34.46,
+    "tok_per_s": 29.0
+   },
+   {
+    "batch": 2,
+    "context": 300,
+    "ms_per_step": 166.16,
+    "tok_per_s": 12.0
+   },
+   {
+    "batch": 8,
+    "context": 300,
+    "ms_per_step": 168.23,
+    "tok_per_s": 47.6
+   },
+   {
+    "batch": 16,
+    "context": 300,
+    "ms_per_step": 171.14,
+    "tok_per_s": 93.5
+   },
+   {
+    "batch": 32,
+    "context": 300,
+    "ms_per_step": 176.16,
+    "tok_per_s": 181.6
+   }
+  ]
+ }
+}

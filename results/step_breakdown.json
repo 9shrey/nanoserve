@@ -1,0 +1,16 @@
+{
+ "total_s": 37.37,
+ "steps": 361,
+ "decode_only": {
+  "steps": 325,
+  "s": 21.5,
+  "ms_per_step": 66.1,
+  "mean_batch": 23.7
+ },
+ "with_prefill": {
+  "steps": 36,
+  "s": 15.87,
+  "prefill_tokens": 16276,
+  "prefill_tok_per_s": 1025.4
+ }
+}

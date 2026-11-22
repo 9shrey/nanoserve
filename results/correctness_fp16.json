@@ -1,0 +1,58 @@
+{
+ "cublas": {
+  "identical": 6,
+  "of": 8,
+  "first_divergence": [
+   64,
+   64,
+   64,
+   64,
+   33,
+   54,
+   64,
+   64
+  ],
+  "dispatch": {},
+  "examples": [
+   {
+    "ours": ": \u2460 Law of conservation of energy; \u2461 Law of conservation of mass; \u2462 Law of conservation of momentum. Among these, the correct ones are (\u3000\u3000)  \nA: \u2460  \nB: \u2461  \nC: \u2462  \nD: \u2460\ufffd",
+    "hf": ": \u2460 Law of conservation of energy; \u2461 Law of conservation of mass; \u2462 Law of conservation of momentum. Among these, the correct statement is (\u3000\u3000)\nA: \u2460\u2461\nB: \u2460\u2462\nC: \u2461\u2462\nD"
+   },
+   {
+    "ours": " there lived a young man named Jack. Jack was a kind-hearted and honest man, and he always tried to help others. One day, he decided to go on a journey to find a magical treasure. He set out on his journey with a map and a compass, but he was not sure where he was going.",
+    "hf": " there lived a young man named Jack. Jack was a kind-hearted and honest man, and he always tried to help others. One day, he decided to go on a journey to find a magical treasure. He set out on his journey with a map and a compass, and he set out at the crack of dawn.\n\n"
+   }
+  ]
+ },
+ "kernel": {
+  "identical": 6,
+  "of": 8,
+  "first_divergence": [
+   64,
+   64,
+   64,
+   64,
+   33,
+   54,
+   64,
+   64
+  ],
+  "dispatch": {
+   "qkv": "cublas: M in [1]; kernel: M in [2, 4, 8, 16]; fp32: M in [24, 32, 48, 64, 96, 128, 192, 256, 512, 1024, 2048]",
+   "o": "cublas: M in [1]; kernel: M in [2, 4, 8, 16]; fp32: M in [24, 32, 48, 64, 96, 128, 192, 256, 512, 1024, 2048]",
+   "gate_up": "cublas: M in [1]; kernel: M in [2, 4, 8, 16, 24, 32, 48, 64]; fp32: M in [96, 128, 192, 256, 512, 1024, 2048]",
+   "down": "cublas: M in [1]; kernel: M in [2, 4, 8, 16, 24, 32, 48, 64, 96]; fp32: M in [128, 192, 256, 512, 1024, 2048]",
+   "lm_head": "cublas: M in [1, 512, 1024, 2048]; kernel: M in [2, 4, 8, 16, 24, 32, 48, 64, 96, 128, 192, 256]"
+  },
+  "examples": [
+   {
+    "ours": ": \u2460 Law of conservation of energy; \u2461 Law of conservation of mass; \u2462 Law of conservation of momentum. Among these, the correct ones are (\u3000\u3000)  \nA: \u2460  \nB: \u2461  \nC: \u2462  \nD: \u2460\ufffd",
+    "hf": ": \u2460 Law of conservation of energy; \u2461 Law of conservation of mass; \u2462 Law of conservation of momentum. Among these, the correct statement is (\u3000\u3000)\nA: \u2460\u2461\nB: \u2460\u2462\nC: \u2461\u2462\nD"
+   },
+   {
+    "ours": " there lived a young man named Jack. Jack was a kind-hearted and honest man, and he always tried to help others. One day, he decided to go on a journey to find a magical treasure. He set out on his journey with a map and a compass, but he was not sure where he was going.",
+    "hf": " there lived a young man named Jack. Jack was a kind-hearted and honest man, and he always tried to help others. One day, he decided to go on a journey to find a magical treasure. He set out on his journey with a map and a compass, and he set out at the crack of dawn.\n\n"
+   }
+  ]
+ }
+}

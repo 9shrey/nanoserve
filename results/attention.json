@@ -1,0 +1,38 @@
+[
+ {
+  "shape": "8 seqs x 1 query x 512 context",
+  "sdpa_ms": 1.927,
+  "grouped_ms": 0.499,
+  "max_abs_diff": 0.00030517578125
+ },
+ {
+  "shape": "32 seqs x 1 query x 512 context",
+  "sdpa_ms": 5.561,
+  "grouped_ms": 0.745,
+  "max_abs_diff": 0.000244140625
+ },
+ {
+  "shape": "16 seqs x 1 query x 1024 context",
+  "sdpa_ms": 5.624,
+  "grouped_ms": 0.784,
+  "max_abs_diff": 0.00018310546875
+ },
+ {
+  "shape": "8 seqs x 5 query x 512 context",
+  "sdpa_ms": 1.452,
+  "grouped_ms": 0.523,
+  "max_abs_diff": 0.00048828125
+ },
+ {
+  "shape": "1 seqs x 256 query x 256 context",
+  "sdpa_ms": 0.466,
+  "grouped_ms": 1.094,
+  "max_abs_diff": 0.001953125
+ },
+ {
+  "shape": "4 seqs x 512 query x 512 context",
+  "sdpa_ms": 5.759,
+  "grouped_ms": 15.362,
+  "max_abs_diff": 0.001953125
+ }
+]
