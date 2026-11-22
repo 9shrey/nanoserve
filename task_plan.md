@@ -7,7 +7,7 @@ streaming server — benchmarked against HF `generate` (and vLLM if it runs on s
 Follows inferbench, whose stated limitation was "real servers handle ragged batches; this declines to".
 
 ## Next Step
-Phase 7 — run benchmarks (offline running), then README/guide/publish.
+All phases complete. Published; resumes main-mlinfra.tex / main-swe.tex built. Optional: demo video.
 
 ## Phases
 ### Phase 1 — Qwen2 forward from scratch, logits parity with HF
@@ -23,9 +23,9 @@ Phase 7 — run benchmarks (offline running), then README/guide/publish.
 ### Phase 6 — HTTP server (OpenAI /v1/completions, SSE streaming)
 **Status:** complete
 ### Phase 7 — Benchmarks: offline throughput, online p50/p99 TTFT/TPOT, memory; vs HF (+vLLM attempt)
-**Status:** pending
+**Status:** complete
 ### Phase 8 — README, interview guide, CI, publish
-**Status:** pending
+**Status:** complete
 
 ## Hard rules
 - Correctness gate before every timing: greedy output must match HF token-for-token.

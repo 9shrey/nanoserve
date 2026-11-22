@@ -15,17 +15,17 @@ def offline() -> str:
         "hf-static16": "HF `generate`, static batches of 16 (left-padded)",
         "nanoserve-nokernel": "nanoserve, stock cuBLAS for every matmul",
         "nanoserve": "**nanoserve** (measured GEMM dispatch)",
-        "vllm": "vLLM (CUDA graphs, its default)",
+        "vllm": "vLLM 0.34 (CUDA graphs + torch.compile, Triton attention)",
         "vllm-eager": "vLLM, `enforce_eager=True`",
     }
     out = ["| engine | output tok/s | vs HF sequential | wall time | memory for KV / activations |",
            "|---|---:|---:|---:|---|"]
-    for arm in ("hf-seq", "hf-static16", "nanoserve-nokernel", "nanoserve", "vllm-eager", "vllm"):
+    for arm in ("hf-seq", "hf-static16", "vllm-eager", "vllm", "nanoserve-nokernel", "nanoserve"):
         if arm not in rows:
             continue
         r = rows[arm]
         if arm.startswith("vllm"):
-            mem = f"vLLM {r['vllm']}, pre-allocated pool"
+            mem = "paged KV pool (its own allocator)"
         elif arm.startswith("hf"):
             mem = f"{r['peak_mem_mib']:.0f} MiB peak above weights"
             if arm == "hf-static16":

@@ -4,9 +4,19 @@
 chunked prefill, preemption, speculative decoding, and an OpenAI-compatible streaming
 server, running Qwen2.5-0.5B on a 4 GB laptop GPU.**
 
-No `transformers` modelling code and no vLLM at runtime. The model forward pass is
-hand-written in PyTorch against the raw safetensors weights. Hugging Face is used only as
-the reference the tests compare against.
+No `transformers` modelling code and no vLLM at runtime (vLLM appears only as a benchmark
+baseline). The model forward pass is hand-written in PyTorch against the raw safetensors
+weights. Hugging Face is used only as the reference the tests compare against.
+
+**In short**, on a GTX 1650 (4 GB, no tensor cores):
+- **231.7 output tok/s** on a ragged 64-request workload: **9.5x** Hugging Face `generate`,
+  and **2.6x vLLM 0.34** on this card (why, and why that would reverse on a tensor-core GPU:
+  [below](#offline-throughput-64-ragged-requests-all-submitted-at-once)).
+- **3.2x** more from speculative decoding on copy-heavy prompts, with output identical to
+  plain greedy; close to nothing on open-ended text, measured rather than hidden.
+- **62 tests**, run in fp32, require every batching feature (continuous batching, chunked
+  prefill, preemption, speculation) to reproduce Hugging Face's greedy output token for
+  token. The tests were mutation-checked.
 
 ## Results
 
@@ -25,6 +35,7 @@ wastes.
 |---|---:|---:|---:|---|
 | HF `generate`, one request at a time | 24.5 | 1.0x | 357 s | 32 MiB peak above weights |
 | HF `generate`, static batches of 16 (left-padded) | 28.9 | 1.2x | 303 s | 394 MiB peak above weights; 42% of generated tokens discarded |
+| vLLM 0.34 (CUDA graphs + torch.compile, Triton attention) | 90.4 | 3.7x | 97 s | paged KV pool (its own allocator) |
 | nanoserve, stock cuBLAS for every matmul | 90.2 | 3.7x | 97 s | 148 MiB of KV at peak, 98% slot utilisation |
 | **nanoserve** (measured GEMM dispatch) | **231.7** | **9.5x** | 38 s | 148 MiB of KV at peak, 98% slot utilisation |
 <!-- /table:offline -->
@@ -34,6 +45,14 @@ wastes.
   are thrown away, and the larger batch drops straight onto this GPU's slow cuBLAS path.
 - **The scheduler alone is worth 3.7x** (stock cuBLAS, same engine). **The measured GEMM
   dispatch is worth another 2.6x** on top.
+- **vLLM vs nanoserve, read carefully.** vLLM runs here (`bench/vllm_offline.py`, own
+  venv, same requests, `max_num_seqs=32`) and gets 90.4 tok/s, *the same as nanoserve on
+  stock cuBLAS (90.2)*. That is expected: vLLM's linear layers also call fp16 cuBLAS, so
+  it hits the same tensor-core cliff on this card. CUDA graphs and torch.compile can't
+  recover matmuls that run 2.5-16x slower than they should. nanoserve's 2.6x over vLLM is the GPU-specific GEMM
+  dispatch, not a better general-purpose engine; on any GPU with tensor cores vLLM would
+  be far ahead. FlashAttention-2 is unavailable on sm_75, so vLLM used its Triton
+  attention backend.
 - Where the 38 s goes (`results/step_breakdown.json`): 325 pure-decode steps averaging
   67 ms at a mean batch of 24, and 36 steps carrying all 16,276 prompt tokens at about
   1,000 prefill tok/s.
@@ -363,8 +382,8 @@ curl -N localhost:8000/v1/chat/completions -H 'content-type: application/json' \
    keep failing; the open-ended concurrency-6 row shows the cost of not doing so.
 5. **Quantised weights (int8/int4).** Decode is bandwidth-bound, so halving the weight
    bytes roughly halves the floor on step time.
-6. **vLLM head-to-head.** `bench/vllm_offline.py` runs vLLM on the identical workload from
-   its own venv; its numbers are not in the table yet.
+6. **Port the dispatch idea into vLLM** as a custom linear method for tensor-core-less GPUs,
+   and measure whether CUDA graphs + the kernel together beat both.
 
 ## Layout
 

@@ -11,8 +11,10 @@ $PY bench/correctness.py results/correctness_fp16.json
 if [ "$1" != "--skip-hf-offline" ]; then rm -f results/offline.jsonl; $PY bench/offline.py --all --n 64
 else python3 -c "
 import json; rows=[json.loads(l) for l in open('results/offline.jsonl')]
-open('results/offline.jsonl','w').write(''.join(json.dumps(r)+'\n' for r in rows if r['arm'].startswith('hf')))"
+open('results/offline.jsonl','w').write(''.join(json.dumps(r)+'\n' for r in rows if r['arm'].startswith(('hf', 'vllm'))))"
   for a in nanoserve-nokernel nanoserve; do $PY bench/offline.py --arm $a --n 64; done; fi
+# vLLM baseline needs its own venv (it pins its own torch): VLLM_PY=/path/to/venv/bin/python
+if [ -n "$VLLM_PY" ]; then $VLLM_PY bench/vllm_offline.py --out results/offline.jsonl; fi
 $PY scripts/step_breakdown.py
 $PY scripts/bench_steps.py results/steps.json
 $PY bench/spec.py results/spec.json

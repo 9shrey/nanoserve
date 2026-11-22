@@ -31,3 +31,8 @@
 - fp16 gate now 6/8 identical (divergence at 33, 54; same with dispatch on/off).
 - Resume: ~/Documents/main-mlinfra.tex + main-swe.tex (new), compiled 1 page each. main.tex untouched.
 - Interview guide: resume_fixes/08-nanoserve-interview-guide.md.
+- vLLM 0.34 runs on sm_75 (TRITON_ATTN; FA2 needs sm_80): 90.4 tok/s offline = nanoserve on stock cuBLAS (90.2).
+  nanoserve 2.6x vLLM is the GEMM dispatch on a tensor-core-less GPU; documented as such.
+- Mutation re-check on final code: 7/7 caught. The autotune-reset mutant survived at first (warm
+  on-disk autotune cache) -> cold-cache subprocess test added.
+- Published github.com/9shrey/nanoserve; CI green (20 CPU tests pass, 42 GPU tests skip on the runner).
